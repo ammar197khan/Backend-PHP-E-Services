@@ -1,0 +1,43 @@
+[x] RegisterUser
+[x] SendUserConfirmationCode
+[x] VerifyUserConfirmationCode
+[x] ChangeUserPassword
+[x] UserLogin
+[x] UserLogout
+
+[x] GetUserProfile
+[x] SetUserDeviceToken
+[x] SetUserLocation
+[x] UpdateUserProfile
+
+[x] GetMainCategories
+[X] GetSubCategories
+
+[x] GetTechnicians
+[*] SearchTechnicians
+[x] GetTechnicianDetails
+[x] GetTechnicianForRating
+
+[x] MakeOrder
+[x] GetUserOrders
+[x] GetUserOrderDetails
+[x] RescheduleUserOrder
+[x] CancelUserOrder (Not Applied)
+[x] RateOrder
+
+[x] TempApproveSingleItem
+[*] ConfirmAllItemsApproval
+[*] ApproveOrderItems
+
+[x] GetUserNotifications
+[x] SetUserNotificationAsSeen
+
+[x] UserAppAboutUs
+[x] UserAppTerms
+[x] UserAppPrivacy
+
+[x] GetComplaintTypes
+[x] SendComplaint
+
+TODO: Entity Activation Conditions On Actions
+TODO: Models => $guarded

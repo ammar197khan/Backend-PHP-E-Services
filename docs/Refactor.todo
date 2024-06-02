@@ -1,0 +1,22 @@
+[-] Scheduled Orders Cron Job
+[-] Order completed_at
+[-] New Location System [Store & Update User ,Orders Info]
+[-] Convert serialization into relations
+[-] Payment firstOrCreate
+[-] Upload to storage instead of publics
+[-] Unify materials tabels & remove others
+[-] Unify materials_requests tabels & remove others
+[-] Unify admins tables & remove others
+[-] Merge tech_nots & user_nots
+[-] Merge tech_tokens & user_tokens
+[-] Merge: aboutuses, contact_uses, terms, privacies
+[-] Upgrade to latest laravel
+[x] Log exception request
+
+
+### Remove Junk tables:
+[x] company_nots  : rm app/Models/CompanyNot.php
+[x] provider_nots : rm app/Models/ProviderNot.php
+[x] tech_rates : rm app/Models/TechRate.php
+[x] contact_uses : rm app/Models/ContactUs.php
+[x] app/Models/Technician::get_tech_rate($id)

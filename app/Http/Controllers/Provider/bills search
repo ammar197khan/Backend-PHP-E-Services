@@ -1,0 +1,154 @@
+public function bills_search($id,Request $request)
+    {
+        $collaboration = Collaboration::find($id);
+        $company = Company::where('id', $collaboration->company_id)->select('id', 'en_name')->first();
+        $companies = Company::where('id', $collaboration->company_id)->select('id', 'en_name')->get();
+//        $get_order = Order::where('company_id', $collaboration->company_id)->where('completed', 1);
+
+        $subs = CompanySubscription::where('company_id', $collaboration->company_id)->first()->subs;
+        $cat_ids = Category::whereIn('id', unserialize($subs))->pluck('parent_id');
+        $cats = Category::whereIn('id', $cat_ids)->select('id','en_name')->get();
+
+        $search = Input::get('search');
+
+        if($search != '')
+        {
+
+            $user = User::where('company_id', $collaboration->company_id)->where(function($q) use($search)
+            {
+                $q->where('en_name','like','%'.$search.'%');
+                $q->orWhere('ar_name','like','%'.$search.'%');
+            }
+            )->first();
+
+            $tech = Technician::where('provider_id', $collaboration->provider_id)->where(function($q) use($search)
+            {
+                $q->where('en_name','like','%'.$search.'%');
+                $q->orWhere('ar_name','like','%'.$search.'%');
+            }
+            )->first();
+
+            $orders = Order::where('company_id', $collaboration->company_id)->where('completed', 1);
+
+            if(is_numeric($search))
+            {
+                $orders = Order::where('company_id', $collaboration->company_id)->where('completed', 1)->where(function($q) use($search)
+                {
+                    $q->where('id','like','%'.$search.'%');
+                    $q->orWhere('smo','like','%'.$search.'%');
+                }
+                );
+            }else
+            {
+                if($user)
+                {
+                    $orders = $orders->where('user_id', $user->id);
+                }
+                if($tech)
+                {
+                    $orders = $orders->where('tech_id', $tech->id);
+                }
+            }
+
+            if($request->has('company_id'))
+            {
+                $orders = $orders->where('company_id', $request->company_id);
+            }
+
+            if($request->has('sub_company'))
+            {
+                $get_sub = User::whereIn('company_id', $collaboration)->whereIn('sub_company_id', $request->sub_company)->pluck('id');
+                $orders = $orders->whereIn('user_id', $get_sub);            }
+
+            if($request->from && $request->to)
+            {
+                $orders = $orders->where('created_at','>=',$request->from)->where('created_at','<=',Carbon::parse($request->to)->addDays(1));
+            }
+
+            if($request->has('main_cats'))
+            {
+                $cat = Category::where('id', $request->main_cats)->first();
+                $sub_cat = Category::where('parent_id', $cat->id)->pluck('id');
+                $orders = $orders->whereIn('sub_cat_id', $sub_cat);
+            }
+
+            if($request->has('sub_cats'))
+            {
+                $orders = $orders->where('sub_cat_id', $request->sub_cats);
+            }
+
+            if($request->has('price_range'))
+            {
+                $price_range = explode(';',$request->price_range);
+                $orders = $orders->where('order_total','>=',$price_range[0])->where('order_total','<=',$price_range[1]);
+            }
+            if($request->service_type)
+            {
+                $orders = $orders->whereIn('service_type', $request->service_type);
+            }
+
+            $bills_orders = $orders->get();
+            $orders = $orders->paginate(50);
+
+            $from = $request->from;
+            $to = $request->to;
+            $sub_company = SubCompany::where('id',$request->sub_company)->first();
+            $main_cats = Category::where('id',$request->main_cats)->first();
+            $sub_cats = Category::where('id',$request->sub_cats)->first();
+
+
+        }else{
+
+            $orders = Order::where('company_id', $collaboration->company_id)->where('completed', 1);
+
+            if($request->has('company_id'))
+            {
+                $orders = $orders->where('company_id', $request->company_id);
+            }
+
+            if($request->has('sub_company'))
+            {
+                $get_sub = User::whereIn('company_id', $collaboration)->whereIn('sub_company_id', $request->sub_company)->pluck('id');
+                $orders = $orders->whereIn('user_id', $get_sub);
+            }
+
+            if($request->from && $request->to)
+            {
+                $orders = $orders->where('created_at','>=',$request->from)->where('created_at','<=',Carbon::parse($request->to)->addDays(1));
+            }
+
+            if($request->has('main_cats'))
+            {
+                $cat = Category::where('id', $request->main_cats)->first();
+                $sub_cat = Category::where('parent_id', $cat->id)->pluck('id');
+                $orders = $orders->whereIn('sub_cat_id', $sub_cat);
+            }
+
+            if($request->has('sub_cats'))
+            {
+                $orders = $orders->where('sub_cat_id', $request->sub_cats);
+            }
+
+            if($request->has('price_range'))
+            {
+                $price_range = explode(';',$request->price_range);
+                $orders = $orders->where('order_total','>=',$price_range[0])->where('order_total','<=',$price_range[1]);
+            }
+            if($request->service_type)
+            {
+                $orders = $orders->whereIn('service_type', $request->service_type);
+            }
+
+            $bills_orders = $orders->get();
+            $orders = $orders->paginate(50);
+
+            $from = $request->from;
+            $to = $request->to;
+            $sub_company = SubCompany::where('id',$request->sub_company)->first();
+            $main_cats = Category::where('id',$request->main_cats)->first();
+            $sub_cats = Category::where('id',$request->sub_cats)->first();
+            $company_name = Company::where('id',$request->company_id)->first();
+        }
+
+        return view('provider.bills.index', compact('orders', 'id', 'search', 'collaboration', 'cats',
+            'from', 'to', 'sub_company', 'main_cats', 'sub_cats','companies','company_name','cats','company','bills_orders'));

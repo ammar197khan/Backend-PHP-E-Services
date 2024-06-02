@@ -1,0 +1,36 @@
+[x] TechnicianRegister
+[x] SendTechnicianConfirmationCode
+[x] VerifyTechnicianConfirmationCode
+[x] ChangeTechnicianPassword
+[x] TechnicianLogin
+[x] TechnicianLogout
+
+[x] GetTechnicianProfile
+[x] SetTechnicianDeviceToken
+[x] SetTechnicianLocation
+[x] UpdateTechnicianProfile
+[x] SetTechnicianOnlineStatus
+[x] GetTechnicianRate
+
+[x] GetTechnicianPendingOrders
+[x] GetTechnicianCompletedOrders
+[x] GetTechnicianOrderDetails
+[X] SetTechnicianOrderStatus
+[x] FinishTechnicianOrder
+[x] CancelTechnicianOrder (Not Applied)
+
+[x] GetCategoryTechnicianJobs
+
+[x] GetItemsCategories
+[x] GetItemsOfCategory (Not Applied)
+[x] SearchItems
+[x] GetItemDetails
+[*] RequestNotAvailableItem
+[x] RequestOrderItemApprovalForUser
+
+[x] GetTechnicianNotifications
+[x] SetTechnicianNotificationAsSeen
+
+[x] TechnicianAppAboutUs
+[x] TechnicianAppTerms
+[x] TechnicianAppPrivacy

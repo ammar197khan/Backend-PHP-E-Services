@@ -1,0 +1,87 @@
+#
+| rotations              |
+| house_types            |
+
+# Cores
+| addresses              |
+| categories             |
+| providers              |
+| suppliers              |
+| companies              |
+| sub_companies          |
+| technicians            |
+| users                  |
+
+# Category Subscriptions
+| company_subscriptions  |
+| provider_subscriptions |
+
+# Partnerships
+| collaborations         | = companies_providers
+| partnerships           | = providers_suppliers
+| provider_category_fees | = categories_companies_providers_fees
+
+# User Details
+| user_locations         |
+
+# Order
+| orders                 |
+| order_user_details     |
+| order_tech_details     |
+| order_addresses        |
+| order_tracking         |
+| order_rates            |
+| order_expenses         |
+| payments               |
+| activity_logs          |
+
+# Order Used Materials
+| order_item_users       |
+| order_tech_requests    |
+| item_request_states    |
+
+# Notifications
+| tech_nots              |
+| user_nots              |
+
+# Device Tokens
+| tech_tokens            |
+| user_tokens            |
+
+# Settings
+| aboutuses              |
+| terms                  |
+| privacies              |
+
+# Support
+| complain_titles        |
+| complains              |
+
+# Others
+| appliances             |
+| codes                  |
+| installments           |
+
+# Admins
+| admins                 |
+| supplier_admins        |
+| company_admins         |
+| provider_admins        |
+
+# Laravel
+| jobs                   |
+| failed_jobs            |
+| migrations             |
+| password_resets        |
+| roles                  |
+| permissions            |
+| role_has_permissions   |
+| model_has_roles        |
+| model_has_permissions  |
+
+# Materials
+| category_material      |
+| material_requests      |
+| materials              |
+| x_warehouse_parts      |
+| x_warehouse_requests   |
